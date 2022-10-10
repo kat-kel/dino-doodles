@@ -4,7 +4,12 @@ from prep_data import Data
 from topic_modeling import (
     tf_idf
 )
-from CONSTANTS import NUMBER_OF_CLUSTERS
+from CONSTANTS import (
+    MAX_DF,
+    MIN_DF,
+    NO_OF_CLUSTERS,
+    NO_OF_MEMBERS
+)
 
 
 class Test_topic_modeling(unittest.TestCase):
@@ -25,8 +30,8 @@ class Test_topic_modeling(unittest.TestCase):
     def test_cluster(self):
         print("\n\nExecuting full TF-IDF analysis...")
         cleaned_propositions = self.data.clean()
-        result = tf_idf(cleaned_propositions)
-        self.assertEqual(len(result), NUMBER_OF_CLUSTERS)
+        result = tf_idf(cleaned_propositions, MAX_DF, MIN_DF, NO_OF_CLUSTERS, NO_OF_MEMBERS)
+        self.assertEqual(len(result), NO_OF_CLUSTERS)
         
 
 if __name__ == "__main__":
