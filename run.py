@@ -12,7 +12,7 @@ def main(max_df, min_df, clusters, members):
     MIN_DF = min_df
     NO_OF_CLUSTERS = clusters
     NO_OF_MEMBERS = members
-    cleaned_data = Data().clean()
+    cleaned_data = [d["Cleaned Proposition"] for d in Data().clean()]
     result = tf_idf(cleaned_data, MAX_DF, MIN_DF, NO_OF_CLUSTERS, NO_OF_MEMBERS)
     for i, cluster in enumerate(result):
         print("-----")
