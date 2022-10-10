@@ -42,11 +42,11 @@ def tf_idf(cleaned_propositions, MAX_DF, MIN_DF, NO_OF_CLUSTERS, NO_OF_MEMBERS):
     order_centroids = model.cluster_centers_.argsort()[:, ::-1]
     terms = vectorizer.get_feature_names_out()
 
-    result = []
+    clusters = []
     for i in range(true_k):
         cluster=[]
         for ind in order_centroids[i, :NO_OF_MEMBERS]:
             cluster.append(terms[ind])
-        result.append(cluster)
+        clusters.append(cluster)
     
-    return result
+    return clusters

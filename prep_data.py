@@ -10,24 +10,23 @@ from CONSTANTS import DATA_FILE
 class Data:
     
     def __init__(self):
-        self.propositions = self.parse_propositions(DATA_FILE)
+        self.dataset = self.load_data(DATA_FILE)
 
-    def parse_propositions(self, data_file):
+    def load_data(self, data_file):
         with open(data_file, "r") as f:
             reader = csv.DictReader(f)
-            return [row["Proposition"] for row in reader]
+            return [dict(row) for row in reader]
     
     def clean(self):
-        result = []
-        for proposition in self.propositions:
-            proposition = proposition.lower()
+        for i, entry in enumerate(self.dataset):
+            proposition = entry["Proposition"].lower()
             bag_of_words = [word for word in re.split(r"(\s|'|’)", proposition) if word!=" "]
             bag_of_words = self.remove_stops(bag_of_words)
-            #bag_of_words = self.remove_ilfaut(bag_of_words)
+            bag_of_words = self.remove_ilfaut(bag_of_words)
             bag_of_words = self.remove_punctuation(bag_of_words)
             cleaned_proposition = " ".join(bag_of_words)
-            result.append(cleaned_proposition)
-        return result
+            self.dataset[i].update({"Cleaned Proposition": cleaned_proposition})
+        return self.dataset
 
     def remove_stops(self, bag_of_words):
         stops = stopwords.words("french")
@@ -48,6 +47,3 @@ class Data:
             return bag_of_words[2:]
         else:
             return bag_of_words
-
-
-
